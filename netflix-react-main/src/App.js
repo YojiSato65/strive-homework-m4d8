@@ -20,6 +20,7 @@ class App extends Component
 
   OMDB_URL = "http://www.omdbapi.com/?apikey=24ad60e9";
 
+
   componentDidMount = () =>
   {
     this.fetchMovies();
