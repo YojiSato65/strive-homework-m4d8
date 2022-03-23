@@ -90,23 +90,25 @@ const App = () =>
   //   this.fetchMovies();
   // };
 
-  useEffect(() =>
-  {
-    showSearchResult()
-  }, [searchString])
+  // useEffect(() =>
+  // {
+  //   showSearchResult(searchResults)
+  // }, [searchString])
 
-  const showSearchResult = async (searchString) =>
+  const showSearchResult = async (searchQuery) =>
   {
-    if (searchString === "")
+    if (searchQuery === "")
     {
       setError(false)
       setSearchResults([])
       // fetchMovies();
     } else
     {
+      console.log(searchQuery)
       try
       {
-        const response = await fetch(OMDB_URL + "&s=" + searchString);
+        setSearchString(searchQuery)
+        const response = await fetch(OMDB_URL + "&s=" + searchQuery);
         if (response.ok)
         {
           const data = await response.json();
@@ -165,13 +167,13 @@ const App = () =>
             An error has occurred, please try again!
           </Alert>
         )}
-        {searchResults?.length > 0 && (
+        {searchString?.length > 0 && (
           <MovieList
             title="Search results"
             movies={searchResults}
           />
         )}
-        {!error && !searchResults?.length > 0 && (
+        {!error && !searchString.length > 0 && (
           <>
             <MovieList
               title="Harry Potter"
