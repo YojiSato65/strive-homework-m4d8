@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from 'react'
 import {
   Col,
   Modal,
@@ -7,8 +7,8 @@ import {
   FormControl,
   Button,
   Alert,
-} from "react-bootstrap";
-import CommentsList from "./CommentsList";
+} from 'react-bootstrap'
+import CommentsList from './CommentsList'
 
 class SingleMovie extends Component {
   state = {
@@ -16,75 +16,75 @@ class SingleMovie extends Component {
     comments: [],
     error: false,
     newComment: {
-      comment: "",
-      rate: "3",
+      comment: '',
+      rate: '3',
       elementId: this.props.data.imdbID,
     },
-  };
+  }
 
   fetchComments = async (movieID) => {
-    const COMMENTS_URL = "https://striveschool-api.herokuapp.com/api/comments/";
+    const COMMENTS_URL = 'https://striveschool-api.herokuapp.com/api/comments/'
     try {
       const response = await fetch(COMMENTS_URL + movieID, {
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTUwNmRlY2RhMzE2MzAwMTVkNTEyM2YiLCJpYXQiOjE2MzI2NjA5NzIsImV4cCI6MTYzMzg3MDU3Mn0.vzSXzuRnbhUs7NjBPeeIiCBg6REuTwnoXE-R7Y-zU9Y",
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjI4YjA3YTRlYTdiMTAwMTVkMDY3YWIiLCJpYXQiOjE2NDgwNDYzOTcsImV4cCI6MTY0OTI1NTk5N30.eeThPX1ElFDUV1yHmmvT6bFTp1rvoqzJ7qIfCIabm1c',
         },
-      });
+      })
       if (response.ok) {
-        const comments = await response.json();
-        this.setState({ error: false, comments });
+        const comments = await response.json()
+        this.setState({ error: false, comments })
       } else {
-        console.log("an error occurred");
-        this.setState({ error: true });
+        console.log('an error occurred')
+        this.setState({ error: true })
       }
     } catch (error) {
-      console.log(error);
-      this.setState({ error: true });
+      console.log(error)
+      this.setState({ error: true })
     }
-  };
+  }
 
   submitComment = async (e) => {
-    e.preventDefault();
-    const COMMENTS_URL = "https://striveschool-api.herokuapp.com/api/comments/";
+    e.preventDefault()
+    const COMMENTS_URL = 'https://striveschool-api.herokuapp.com/api/comments/'
     try {
       const response = await fetch(COMMENTS_URL, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(this.state.newComment),
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTUwNmRlY2RhMzE2MzAwMTVkNTEyM2YiLCJpYXQiOjE2MzI2NjA5NzIsImV4cCI6MTYzMzg3MDU3Mn0.vzSXzuRnbhUs7NjBPeeIiCBg6REuTwnoXE-R7Y-zU9Y",
-          "Content-Type": "application/json",
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjI4YjA3YTRlYTdiMTAwMTVkMDY3YWIiLCJpYXQiOjE2NDgwNDYzOTcsImV4cCI6MTY0OTI1NTk5N30.eeThPX1ElFDUV1yHmmvT6bFTp1rvoqzJ7qIfCIabm1c',
+          'Content-Type': 'application/json',
         },
-      });
+      })
       if (response.ok) {
-        alert("Comment added");
+        alert('Comment added')
         this.setState({
           newComment: {
-            comment: "",
+            comment: '',
             rate: 0,
             elementId: this.props.data.imdbID,
           },
-        });
+        })
       } else {
-        alert("An error has occurred");
+        alert('An error has occurred')
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   handleRadioChange = (rating) => {
-    let newComment = this.state.newComment;
-    newComment.rate = rating;
-    this.setState({ newComment });
-  };
+    let newComment = this.state.newComment
+    newComment.rate = rating
+    this.setState({ newComment })
+  }
 
   handleCommentText = (e) => {
-    let newComment = this.state.newComment;
-    newComment.comment = e.currentTarget.value;
-    this.setState({ newComment });
-  };
+    let newComment = this.state.newComment
+    newComment.comment = e.currentTarget.value
+    this.setState({ newComment })
+  }
 
   render() {
     return (
@@ -94,8 +94,8 @@ class SingleMovie extends Component {
           src={this.props.data.Poster}
           alt="movie"
           onClick={() => {
-            this.setState({ selected: !this.state.selected });
-            this.fetchComments(this.props.data.imdbID);
+            this.setState({ selected: !this.state.selected })
+            this.fetchComments(this.props.data.imdbID)
           }}
         />
         <Modal
@@ -126,8 +126,8 @@ class SingleMovie extends Component {
                       value="1"
                       type="radio"
                       name="rating"
-                      defaultChecked={this.state.newComment.rate === "1"}
-                      onClick={() => this.handleRadioChange("1")}
+                      defaultChecked={this.state.newComment.rate === '1'}
+                      onClick={() => this.handleRadioChange('1')}
                     />
                     <Form.Check
                       inline
@@ -135,8 +135,8 @@ class SingleMovie extends Component {
                       value="2"
                       type="radio"
                       name="rating"
-                      defaultChecked={this.state.newComment.rate === "2"}
-                      onClick={() => this.handleRadioChange("2")}
+                      defaultChecked={this.state.newComment.rate === '2'}
+                      onClick={() => this.handleRadioChange('2')}
                     />
                     <Form.Check
                       inline
@@ -144,8 +144,8 @@ class SingleMovie extends Component {
                       value="3"
                       type="radio"
                       name="rating"
-                      defaultChecked={this.state.newComment.rate === "3"}
-                      onClick={() => this.handleRadioChange("3")}
+                      defaultChecked={this.state.newComment.rate === '3'}
+                      onClick={() => this.handleRadioChange('3')}
                     />
                     <Form.Check
                       inline
@@ -153,8 +153,8 @@ class SingleMovie extends Component {
                       value="4"
                       type="radio"
                       name="rating"
-                      defaultChecked={this.state.newComment.rate === "4"}
-                      onClick={() => this.handleRadioChange("4")}
+                      defaultChecked={this.state.newComment.rate === '4'}
+                      onClick={() => this.handleRadioChange('4')}
                     />
                     <Form.Check
                       inline
@@ -162,8 +162,8 @@ class SingleMovie extends Component {
                       value="5"
                       type="radio"
                       name="rating"
-                      defaultChecked={this.state.newComment.rate === "5"}
-                      onClick={() => this.handleRadioChange("5")}
+                      defaultChecked={this.state.newComment.rate === '5'}
+                      onClick={() => this.handleRadioChange('5')}
                     />
                   </div>
                   <InputGroup className="mb-3">
@@ -185,8 +185,8 @@ class SingleMovie extends Component {
           </Modal.Body>
         </Modal>
       </Col>
-    );
+    )
   }
 }
 
-export default SingleMovie;
+export default SingleMovie

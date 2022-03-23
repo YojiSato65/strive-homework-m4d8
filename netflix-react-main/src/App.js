@@ -7,7 +7,8 @@ import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
 import MovieList from "./components/MovieList";
 
-class App extends Component {
+class App extends Component
+{
   state = {
     gallery1: [],
     gallery2: [],
@@ -19,74 +20,97 @@ class App extends Component {
 
   OMDB_URL = "http://www.omdbapi.com/?apikey=24ad60e9";
 
-  componentDidMount = () => {
+  componentDidMount = () =>
+  {
     this.fetchMovies();
   };
 
-  fetchMovies = () => {
+  fetchMovies = () =>
+  {
     Promise.all([
       fetch(this.OMDB_URL + "&s=harry%20potter")
         .then((response) => response.json())
-        .then((responseObject) => {
-          if (responseObject.Response === "True") {
+        .then((responseObject) =>
+        {
+          if (responseObject.Response === "True")
+          {
             this.setState({ gallery1: responseObject.Search });
-          } else {
+          } else
+          {
             this.setState({ error: true });
           }
         }),
       fetch(this.OMDB_URL + "&s=avengers")
         .then((response) => response.json())
-        .then((responseObject) => {
-          if (responseObject.Response === "True") {
+        .then((responseObject) =>
+        {
+          if (responseObject.Response === "True")
+          {
             this.setState({ gallery2: responseObject.Search });
-          } else {
+          } else
+          {
             this.setState({ error: true });
           }
         }),
       fetch(this.OMDB_URL + "&s=star%20wars")
         .then((response) => response.json())
-        .then((responseObject) => {
-          if (responseObject.Response === "True") {
+        .then((responseObject) =>
+        {
+          if (responseObject.Response === "True")
+          {
             this.setState({ gallery3: responseObject.Search });
-          } else {
+          } else
+          {
             this.setState({ error: true });
           }
         }),
     ])
       .then(() => this.setState({ loading: false }))
-      .catch((err) => {
+      .catch((err) =>
+      {
         this.setState({ error: true });
         console.log("An error has occurred:", err);
       });
   };
 
-  showSearchResult = async (searchString) => {
-    if (searchString === "") {
-      this.setState({ error: false, searchResults: [] }, () => {
+  showSearchResult = async (searchString) =>
+  {
+    if (searchString === "")
+    {
+      this.setState({ error: false, searchResults: [] }, () =>
+      {
         this.fetchMovies();
       });
-    } else {
-      try {
+    } else
+    {
+      try
+      {
         const response = await fetch(this.OMDB_URL + "&s=" + searchString);
-        if (response.ok) {
+        if (response.ok)
+        {
           const data = await response.json();
-          if (data.Response === "True") {
+          if (data.Response === "True")
+          {
             this.setState({ searchResults: data.Search, error: false });
-          } else {
+          } else
+          {
             this.setState({ error: true });
           }
-        } else {
+        } else
+        {
           this.setState({ error: true });
           console.log("an error occurred");
         }
-      } catch (error) {
+      } catch (error)
+      {
         this.setState({ error: true });
         console.log(error);
       }
     }
   };
 
-  render() {
+  render()
+  {
     return (
       <div>
         <MyNavbar showSearchResult={this.showSearchResult} />
